@@ -299,203 +299,223 @@
      Assignment form
   ========================== */
 
-  .assignment-form {
-    display: grid;
-    gap: 16px;
+ .assignment-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
 
-    min-width: 0;
-    padding: 0 24px 24px;
-  }
+  width: 100%;
+  min-width: 0;
+  padding: 0 24px 24px;
+}
 
-  .form-group {
-    display: grid;
-    gap: 7px;
+/* Force every direct child onto its own full-width row */
+.assignment-form > * {
+  grid-column: 1 / -1;
+  width: 100%;
+  min-width: 0;
+}
 
-    min-width: 0;
-  }
+.form-group {
+  display: grid;
+  gap: 7px;
 
-  .form-row {
-    display: grid;
-    grid-template-columns:
-      minmax(0, 1fr)
-      minmax(0, 1fr);
+  width: 100%;
+  min-width: 0;
+}
 
-    gap: 12px;
-    min-width: 0;
-  }
+.form-row {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(0, 1fr);
 
-  .notes-group {
-    width: 100%;
-    min-width: 0;
-  }
+  gap: 12px;
+  width: 100%;
+  min-width: 0;
+}
 
-  .notes-group textarea {
-    display: block;
-    width: 100%;
-    min-width: 0;
-    min-height: 100px;
-  }
+.notes-group {
+  display: grid;
+  grid-column: 1 / -1;
 
-  label {
-    color: var(--text-secondary);
-    font-size: 0.84rem;
-    font-weight: 600;
-  }
+  width: 100%;
+  min-width: 0;
+}
 
-  /*
-    Regular text fields and textarea.
-    Date inputs are styled separately below.
-  */
+.notes-group textarea {
+  display: block;
 
-  input:not([type="date"]),
-  textarea {
-    width: 100%;
-    min-width: 0;
-    max-width: 100%;
-    padding: 13px 14px;
+  width: 100%;
+  min-width: 0;
+  min-height: 100px;
+}
 
-    border: 1px solid rgba(255, 255, 255, 0.13);
-    border-radius: 14px;
-    outline: none;
+label {
+  color: var(--text-secondary);
+  font-size: 0.84rem;
+  font-weight: 600;
+}
 
-    color: var(--text-primary);
-    background: rgba(255, 255, 255, 0.07);
+/*
+  Regular text fields and textarea.
+  Date inputs are styled separately below.
+*/
 
-    transition:
-      border-color 0.25s ease,
-      background 0.25s ease,
-      box-shadow 0.25s ease;
-  }
+input:not([type="date"]),
+textarea {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  padding: 13px 14px;
 
-  input:not([type="date"])::placeholder,
-  textarea::placeholder {
-    color: rgba(255, 255, 255, 0.38);
-  }
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 14px;
+  outline: none;
 
-  input:not([type="date"]):focus,
-  textarea:focus {
-    border-color: var(--accent);
-    background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.07);
 
-    box-shadow:
-      0 0 0 4px rgba(138, 180, 255, 0.13);
-  }
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+}
 
-  textarea {
-    min-height: 80px;
-    resize: vertical;
-  }
+input:not([type="date"])::placeholder,
+textarea::placeholder {
+  color: rgba(255, 255, 255, 0.38);
+}
 
-  /* =========================
-     Mobile-safe date field
-  ========================== */
+input:not([type="date"]):focus,
+textarea:focus {
+  border-color: var(--accent);
+  background: rgba(255, 255, 255, 0.1);
 
-  .date-input-wrapper {
-    display: flex;
-    align-items: center;
+  box-shadow:
+    0 0 0 4px rgba(138, 180, 255, 0.13);
+}
 
-    width: 100%;
-    min-width: 0;
-    max-width: 100%;
-    padding: 13px 14px;
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
 
-    border: 1px solid rgba(255, 255, 255, 0.13);
-    border-radius: 14px;
+/* =========================
+   Mobile-safe date field
+========================== */
 
-    background: rgba(255, 255, 255, 0.07);
+.date-input-wrapper {
+  display: flex;
+  align-items: center;
 
-    overflow: hidden;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  padding: 13px 14px;
 
-    transition:
-      border-color 0.25s ease,
-      background 0.25s ease,
-      box-shadow 0.25s ease;
-  }
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 14px;
 
-  .date-input-wrapper:focus-within {
-    border-color: var(--accent);
-    background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.07);
 
-    box-shadow:
-      0 0 0 4px rgba(138, 180, 255, 0.13);
-  }
+  overflow: hidden;
 
-  input[type="date"] {
-    display: block;
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+}
 
-    width: 100%;
-    min-width: 0;
-    max-width: 100%;
-    padding: 0;
+.date-input-wrapper:focus-within {
+  border-color: var(--accent);
+  background: rgba(255, 255, 255, 0.1);
 
-    border: none;
-    outline: none;
+  box-shadow:
+    0 0 0 4px rgba(138, 180, 255, 0.13);
+}
 
-    color: var(--text-primary);
-    background: transparent;
+input[type="date"] {
+  display: block;
 
-    font: inherit;
-    color-scheme: dark;
-  }
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  padding: 0;
 
-  input[type="date"]::-webkit-date-and-time-value {
-    min-width: 0;
-    text-align: left;
-  }
+  border: none;
+  outline: none;
 
-  input[type="date"]::-webkit-calendar-picker-indicator {
-    cursor: pointer;
-  }
+  color: var(--text-primary);
+  background: transparent;
 
+  font: inherit;
+  color-scheme: dark;
+}
+
+input[type="date"]::-webkit-date-and-time-value {
+  min-width: 0;
+  text-align: left;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+}
   /* =========================
      Add-assignment button
   ========================== */
 
-  .add-button {
-    display: block;
-    width: 100%;
-    padding: 14px 18px;
+.add-button {
+  display: block;
+  grid-column: 1 / -1;
 
-    border: none;
-    border-radius: 15px;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 14px 18px;
 
-    color: #111520;
+  border: none;
+  border-radius: 15px;
 
-    background:
-      linear-gradient(
-        135deg,
-        var(--accent),
-        var(--accent-light)
-      );
+  color: #111520;
 
-    font-weight: 700;
+  background:
+    linear-gradient(
+      135deg,
+      var(--accent),
+      var(--accent-light)
+    );
 
-    transition:
-      transform 0.25s ease,
-      box-shadow 0.25s ease;
-  }
+  font-weight: 700;
 
-  .add-button:hover {
-    transform: translateY(-2px);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
 
-    box-shadow:
-      0 12px 30px rgba(138, 180, 255, 0.25);
-  }
+.add-button:hover {
+  transform: translateY(-2px);
 
-  .add-button:focus-visible {
-    outline: 3px solid rgba(138, 180, 255, 0.4);
-    outline-offset: 3px;
-  }
+  box-shadow:
+    0 12px 30px rgba(138, 180, 255, 0.25);
+}
 
-  .form-message {
-    min-height: 20px;
+.add-button:focus-visible {
+  outline: 3px solid rgba(138, 180, 255, 0.4);
+  outline-offset: 3px;
+}
 
-    color: var(--success);
+.form-message {
+  grid-column: 1 / -1;
 
-    font-size: 0.85rem;
-    text-align: center;
-  }
+  width: 100%;
+  min-height: 20px;
 
+  color: var(--success);
+
+  font-size: 0.85rem;
+  text-align: center;
+}
   /* =========================
      Assignment list
   ========================== */
