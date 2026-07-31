@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>Sign In | Cooper & Bradley</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --background-dark: #10131c;
+      --background-light: #1c2130;
+      --text-primary: #ffffff;
+      --text-secondary: #bec4d4;
+      --accent: #8ab4ff;
+      --accent-light: #d2e1ff;
+      --danger: #ff9aa8;
+    }
+
+    body {
+      display: grid;
+      place-items: center;
+
+      min-height: 100vh;
+      padding: 24px;
+
+      color: var(--text-primary);
+
+      font-family:
+        "Segoe UI",
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        sans-serif;
+
+      background:
+        radial-gradient(
+          circle at 15% 15%,
+          rgba(138, 180, 255, 0.24),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 85% 80%,
+          rgba(217, 166, 255, 0.18),
+          transparent 32%
+        ),
+        linear-gradient(
+          145deg,
+          var(--background-dark),
+          var(--background-light)
+        );
+    }
+
+    .login-container {
+      width: min(430px, 100%);
+      text-align: center;
+    }
+
+    .heart {
+      display: grid;
+      place-items: center;
+
+      width: 62px;
+      height: 62px;
+      margin: 0 auto 18px;
+
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+
+      color: #ffb7c7;
+      background: rgba(255, 255, 255, 0.08);
+
+      font-size: 1.6rem;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+
+      font-size: clamp(2.1rem, 8vw, 3.4rem);
+      letter-spacing: -0.1rem;
+    }
+
+    .description {
+      margin-bottom: 27px;
+
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .login-card {
+      padding: 28px;
+
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 27px;
+
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.3);
+
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .google-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+
+      width: 100%;
+      padding: 14px 18px;
+
+      border: none;
+      border-radius: 15px;
+
+      color: #111520;
+      background:
+        linear-gradient(
+          135deg,
+          var(--accent),
+          var(--accent-light)
+        );
+
+      font: inherit;
+      font-weight: 700;
+
+      cursor: pointer;
+
+      transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        opacity 0.25s ease;
+    }
+
+    .google-button:hover:not(:disabled) {
+      transform: translateY(-2px);
+
+      box-shadow:
+        0 12px 30px rgba(138, 180, 255, 0.25);
+    }
+
+    .google-button:disabled {
+      cursor: wait;
+      opacity: 0.65;
+    }
+
+    .google-icon {
+      display: grid;
+      place-items: center;
+
+      width: 25px;
+      height: 25px;
+
+      border-radius: 50%;
+
+      color: #ffffff;
+      background: #ffffff;
+
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+
+    .google-icon span {
+      color: #4285f4;
+    }
+
+    .login-message {
+      min-height: 22px;
+      margin-top: 16px;
+
+      color: var(--danger);
+
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    .private-note {
+      margin-top: 20px;
+
+      color: var(--text-secondary);
+
+      font-size: 0.78rem;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="login-container">
+    <div class="heart">♥</div>
+
+    <h1>Welcome back</h1>
+
+    <p class="description">
+      Sign in to enter Cooper and Bradley's shared space.
+    </p>
+
+    <section class="login-card">
+      <button
+        class="google-button"
+        id="googleLoginButton"
+        type="button"
+      >
+        <span class="google-icon">
+          <span>G</span>
+        </span>
+
+        <span>Continue with Google</span>
+      </button>
+
+      <p
+        class="login-message"
+        id="loginMessage"
+        aria-live="polite"
+      ></p>
+    </section>
+
+    <p class="private-note">
+      Access is intended only for Cooper and Bradley.
+    </p>
+  </main>
+
+  <script type="module">
+    import { auth } from "./firebase-config.js";
+
+    import {
+      GoogleAuthProvider,
+      onAuthStateChanged,
+      signInWithPopup
+    } from
+      "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+
+    const googleLoginButton =
+      document.getElementById("googleLoginButton");
+
+    const loginMessage =
+      document.getElementById("loginMessage");
+
+    const provider =
+      new GoogleAuthProvider();
+
+    /*
+      Show Google's account picker even when the browser
+      already has a Google account selected.
+    */
+
+    provider.setCustomParameters({
+      prompt: "select_account"
+    });
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        window.location.replace("index.html");
+      }
+    });
+
+    async function signInWithGoogle() {
+      googleLoginButton.disabled = true;
+      googleLoginButton.lastElementChild.textContent =
+        "Signing In...";
+
+      loginMessage.textContent = "";
+
+      try {
+        await signInWithPopup(
+          auth,
+          provider
+        );
+
+        window.location.replace("index.html");
+      } catch (error) {
+        console.error(
+          "Google sign-in failed:",
+          error
+        );
+
+        if (
+          error.code ===
+          "auth/popup-closed-by-user"
+        ) {
+          loginMessage.textContent =
+            "The Google sign-in window was closed.";
+        } else if (
+          error.code ===
+          "auth/unauthorized-domain"
+        ) {
+          loginMessage.textContent =
+            "This GitHub Pages domain has not been authorized in Firebase.";
+        } else {
+          loginMessage.textContent =
+            "Google sign-in could not be completed.";
+        }
+
+        googleLoginButton.disabled = false;
+        googleLoginButton.lastElementChild.textContent =
+          "Continue with Google";
+      }
+    }
+
+    googleLoginButton.addEventListener(
+      "click",
+      signInWithGoogle
+    );
+  </script>
+</body>
+</html>
