@@ -1,0 +1,2006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>Cooper's School | Cooper & Bradley</title>
+
+  <style>
+    /* =========================
+       Base styles
+    ========================== */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --background-dark: #10131c;
+      --background-light: #1c2130;
+
+      --panel-background: rgba(255, 255, 255, 0.08);
+      --panel-border: rgba(255, 255, 255, 0.14);
+
+      --text-primary: #ffffff;
+      --text-secondary: #bec4d4;
+      --text-dark: #171923;
+
+      --accent: #8ab4ff;
+      --accent-light: #b9d2ff;
+      --accent-background: rgba(138, 180, 255, 0.15);
+
+      --danger: #ff8797;
+      --success: #8de1b1;
+      --success-light: #c7f8da;
+      --success-background: rgba(141, 225, 177, 0.12);
+
+      --shadow: 0 25px 60px rgba(0, 0, 0, 0.28);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+
+      color: var(--text-primary);
+
+      font-family:
+        "Segoe UI",
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        sans-serif;
+
+      background:
+        radial-gradient(
+          circle at 10% 10%,
+          rgba(138, 180, 255, 0.22),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 90% 80%,
+          rgba(217, 166, 255, 0.13),
+          transparent 35%
+        ),
+        linear-gradient(
+          145deg,
+          var(--background-dark),
+          var(--background-light)
+        );
+
+      background-attachment: fixed;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    /* =========================
+       Header
+    ========================== */
+
+    .page-header {
+      width: min(1300px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 32px 0 20px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+
+      margin-bottom: 28px;
+      padding: 10px 16px;
+
+      border: 1px solid var(--panel-border);
+      border-radius: 999px;
+
+      color: var(--text-secondary);
+      background: rgba(255, 255, 255, 0.06);
+
+      text-decoration: none;
+
+      transition:
+        color 0.3s ease,
+        background 0.3s ease,
+        transform 0.3s ease;
+    }
+
+    .back-link:hover {
+      color: var(--text-primary);
+      background: rgba(255, 255, 255, 0.11);
+      transform: translateX(-4px);
+    }
+
+    .header-content {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 30px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 12px;
+
+      color: var(--accent-light);
+
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.16rem;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin-bottom: 12px;
+
+      font-size: clamp(2.3rem, 6vw, 4.7rem);
+      line-height: 1;
+      letter-spacing: -0.16rem;
+    }
+
+    .header-description {
+      max-width: 640px;
+
+      color: var(--text-secondary);
+
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+
+    .assignment-count-card {
+      flex-shrink: 0;
+      min-width: 170px;
+      padding: 22px;
+
+      border: 1px solid var(--panel-border);
+      border-radius: 24px;
+
+      background: var(--panel-background);
+      box-shadow: var(--shadow);
+
+      text-align: center;
+      backdrop-filter: blur(18px);
+    }
+
+    .assignment-count {
+      display: block;
+
+      color: var(--accent-light);
+
+      font-size: 2.5rem;
+      font-weight: 700;
+    }
+
+    .assignment-count-label {
+      color: var(--text-secondary);
+      font-size: 0.88rem;
+    }
+
+    /* =========================
+       Main layout
+    ========================== */
+
+    main {
+      width: min(1300px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 20px 0 70px;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: minmax(330px, 0.85fr) minmax(500px, 1.4fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .panel {
+      overflow: hidden;
+
+      border: 1px solid var(--panel-border);
+      border-radius: 28px;
+
+      background: var(--panel-background);
+      box-shadow: var(--shadow);
+
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .panel-header {
+      padding: 24px 24px 18px;
+    }
+
+    .panel-header h2 {
+      margin-bottom: 6px;
+      font-size: 1.35rem;
+    }
+
+    .panel-header p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    /* =========================
+       Assignment form
+    ========================== */
+
+    .assignment-form {
+      display: grid;
+      gap: 16px;
+
+      padding: 0 24px 24px;
+    }
+
+    .form-group {
+      display: grid;
+      gap: 7px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    label {
+      color: var(--text-secondary);
+      font-size: 0.84rem;
+      font-weight: 600;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 13px 14px;
+
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      border-radius: 14px;
+      outline: none;
+
+      color: var(--text-primary);
+      background: rgba(255, 255, 255, 0.07);
+
+      transition:
+        border-color 0.25s ease,
+        background 0.25s ease,
+        box-shadow 0.25s ease;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: rgba(255, 255, 255, 0.38);
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: var(--accent);
+      background: rgba(255, 255, 255, 0.1);
+
+      box-shadow:
+        0 0 0 4px rgba(138, 180, 255, 0.13);
+    }
+
+    input[type="date"] {
+      color-scheme: dark;
+    }
+
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    .add-button {
+      padding: 14px 18px;
+
+      border: none;
+      border-radius: 15px;
+
+      color: #111520;
+      background:
+        linear-gradient(
+          135deg,
+          var(--accent),
+          var(--accent-light)
+        );
+
+      font-weight: 700;
+
+      transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+    }
+
+    .add-button:hover {
+      transform: translateY(-2px);
+
+      box-shadow:
+        0 12px 30px rgba(138, 180, 255, 0.25);
+    }
+
+    .form-message {
+      min-height: 20px;
+
+      color: var(--success);
+
+      font-size: 0.85rem;
+      text-align: center;
+    }
+
+    /* =========================
+       Assignment list
+    ========================== */
+
+    .assignment-list-section {
+      border-top: 1px solid var(--panel-border);
+    }
+
+    .list-toolbar {
+      padding: 20px 24px 14px;
+    }
+
+    .list-toolbar h3 {
+      font-size: 1rem;
+    }
+
+    .assignment-list {
+      display: grid;
+      gap: 11px;
+
+      max-height: 540px;
+      padding: 0 18px 22px;
+
+      overflow-y: auto;
+    }
+
+    .assignment-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
+
+      padding: 15px;
+
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 17px;
+
+      background: rgba(255, 255, 255, 0.055);
+
+      animation: assignmentEnter 0.35s ease;
+    }
+
+    @keyframes assignmentEnter {
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .assignment-details {
+      min-width: 0;
+    }
+
+    .assignment-title {
+      margin-bottom: 5px;
+
+      font-size: 0.98rem;
+      font-weight: 650;
+
+      overflow-wrap: anywhere;
+    }
+
+    .assignment-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+
+      margin-bottom: 6px;
+    }
+
+    .meta-badge {
+      padding: 4px 8px;
+
+      border-radius: 999px;
+
+      color: var(--accent-light);
+      background: var(--accent-background);
+
+      font-size: 0.72rem;
+    }
+
+    .due-badge.overdue {
+      color: #ffc2ca;
+      background: rgba(255, 135, 151, 0.15);
+    }
+
+    .assignment-notes {
+      color: var(--text-secondary);
+      font-size: 0.8rem;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+    }
+
+    .complete-button {
+      align-self: center;
+      flex-shrink: 0;
+
+      padding: 9px 13px;
+
+      border: 1px solid rgba(141, 225, 177, 0.3);
+      border-radius: 11px;
+
+      color: var(--success-light);
+      background: var(--success-background);
+
+      font-size: 0.78rem;
+      font-weight: 700;
+
+      transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease;
+    }
+
+    .complete-button:hover {
+      transform: translateY(-2px);
+
+      border-color: rgba(141, 225, 177, 0.55);
+      background: rgba(141, 225, 177, 0.22);
+    }
+
+    .empty-state {
+      padding: 35px 20px 42px;
+
+      color: var(--text-secondary);
+
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    .empty-state-icon {
+      display: block;
+      margin-bottom: 9px;
+      font-size: 2rem;
+    }
+
+    /* =========================
+       Calendar
+    ========================== */
+
+    .calendar-panel {
+      padding-bottom: 22px;
+    }
+
+    .calendar-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+
+      padding: 24px;
+    }
+
+    .calendar-title {
+      text-align: center;
+    }
+
+    .calendar-title h2 {
+      margin-bottom: 4px;
+      font-size: 1.4rem;
+    }
+
+    .calendar-title p {
+      color: var(--text-secondary);
+      font-size: 0.82rem;
+    }
+
+    .calendar-button {
+      display: grid;
+      flex-shrink: 0;
+      place-items: center;
+
+      width: 42px;
+      height: 42px;
+
+      border: 1px solid var(--panel-border);
+      border-radius: 13px;
+
+      color: var(--text-primary);
+      background: rgba(255, 255, 255, 0.06);
+
+      font-size: 1.15rem;
+
+      transition:
+        background 0.25s ease,
+        transform 0.25s ease;
+    }
+
+    .calendar-button:hover {
+      background: rgba(255, 255, 255, 0.12);
+      transform: scale(1.05);
+    }
+
+    .today-button {
+      display: block;
+
+      margin: -9px auto 18px;
+      padding: 8px 14px;
+
+      border: 1px solid rgba(138, 180, 255, 0.22);
+      border-radius: 999px;
+
+      color: var(--accent-light);
+      background: var(--accent-background);
+
+      font-size: 0.8rem;
+    }
+
+    .calendar-container {
+      padding: 0 18px;
+    }
+
+    .calendar-weekdays,
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+    }
+
+    .weekday {
+      padding: 8px 4px 12px;
+
+      color: var(--text-secondary);
+
+      font-size: 0.73rem;
+      font-weight: 700;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .calendar-grid {
+      gap: 7px;
+    }
+
+    .calendar-day {
+      position: relative;
+
+      min-height: 105px;
+      padding: 9px;
+
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: 15px;
+      outline: none;
+
+      background: rgba(255, 255, 255, 0.04);
+
+      cursor: pointer;
+
+      transition:
+        border-color 0.25s ease,
+        background 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+    }
+
+    .calendar-day:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.07);
+      transform: translateY(-2px);
+    }
+
+    .calendar-day:focus-visible {
+      border-color: var(--accent);
+      box-shadow:
+        0 0 0 3px rgba(138, 180, 255, 0.18);
+    }
+
+    .calendar-day.outside-month {
+      opacity: 0.32;
+    }
+
+    .calendar-day.today {
+      border-color: var(--accent);
+      background: rgba(138, 180, 255, 0.08);
+    }
+
+    .calendar-day.selected {
+      border-color: var(--accent-light);
+      background: rgba(138, 180, 255, 0.16);
+
+      box-shadow:
+        inset 0 0 0 1px rgba(138, 180, 255, 0.18);
+    }
+
+    .day-number {
+      display: grid;
+      place-items: center;
+
+      width: 26px;
+      height: 26px;
+      margin-bottom: 6px;
+
+      border-radius: 50%;
+
+      font-size: 0.78rem;
+      font-weight: 650;
+    }
+
+    .calendar-day.today .day-number {
+      color: var(--text-dark);
+      background: var(--accent);
+    }
+
+    .calendar-events {
+      display: grid;
+      gap: 5px;
+    }
+
+    .calendar-event {
+      overflow: hidden;
+
+      padding: 5px 7px;
+
+      border-left: 3px solid var(--accent);
+      border-radius: 6px;
+
+      color: var(--accent-light);
+      background: rgba(138, 180, 255, 0.13);
+
+      font-size: 0.66rem;
+      line-height: 1.25;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      pointer-events: none;
+    }
+
+    .more-events {
+      color: var(--text-secondary);
+      font-size: 0.65rem;
+    }
+
+    /* =========================
+       Selected date section
+    ========================== */
+
+    .selected-day-panel {
+      margin: 22px 18px 0;
+      padding: 20px;
+
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 19px;
+
+      background: rgba(255, 255, 255, 0.045);
+    }
+
+    .selected-day-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+
+      margin-bottom: 15px;
+    }
+
+    .selected-day-label {
+      display: block;
+      margin-bottom: 4px;
+
+      color: var(--accent-light);
+
+      font-size: 0.69rem;
+      font-weight: 700;
+      letter-spacing: 0.1rem;
+      text-transform: uppercase;
+    }
+
+    .selected-day-header h3 {
+      font-size: 1.1rem;
+    }
+
+    .selected-day-count {
+      flex-shrink: 0;
+
+      padding: 6px 10px;
+
+      border-radius: 999px;
+
+      color: var(--accent-light);
+      background: var(--accent-background);
+
+      font-size: 0.73rem;
+    }
+
+    .selected-day-list {
+      display: grid;
+      gap: 9px;
+    }
+
+    .selected-day-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+
+      padding: 12px 13px;
+
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: 13px;
+
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .selected-day-item-details {
+      min-width: 0;
+    }
+
+    .selected-day-item-title {
+      margin-bottom: 3px;
+      font-size: 0.9rem;
+      font-weight: 650;
+      overflow-wrap: anywhere;
+    }
+
+    .selected-day-item-course,
+    .selected-day-item-notes {
+      color: var(--text-secondary);
+      font-size: 0.76rem;
+      line-height: 1.4;
+    }
+
+    .selected-day-item-notes {
+      margin-top: 4px;
+    }
+
+    .selected-day-complete {
+      flex-shrink: 0;
+
+      padding: 7px 10px;
+
+      border: 1px solid rgba(141, 225, 177, 0.3);
+      border-radius: 9px;
+
+      color: var(--success-light);
+      background: var(--success-background);
+
+      font-size: 0.72rem;
+      font-weight: 700;
+
+      transition:
+        transform 0.25s ease,
+        background 0.25s ease;
+    }
+
+    .selected-day-complete:hover {
+      transform: translateY(-2px);
+      background: rgba(141, 225, 177, 0.22);
+    }
+
+    .selected-day-empty {
+      padding: 14px 0;
+
+      color: var(--text-secondary);
+
+      font-size: 0.85rem;
+      text-align: center;
+    }
+
+    /* =========================
+       Responsive design
+    ========================== */
+
+    @media (max-width: 1020px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .assignment-list {
+        max-height: none;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .page-header,
+      main {
+        width: min(100% - 24px, 1300px);
+      }
+
+      .header-content {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .assignment-count-card {
+        width: 100%;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .calendar-container {
+        padding: 0 8px;
+      }
+
+      .calendar-grid {
+        gap: 4px;
+      }
+
+      .calendar-day {
+        min-height: 78px;
+        padding: 6px;
+        border-radius: 11px;
+      }
+
+      .calendar-event {
+        padding: 4px;
+        border-left-width: 2px;
+        font-size: 0.58rem;
+      }
+
+      .weekday {
+        font-size: 0.61rem;
+      }
+
+      .assignment-item,
+      .selected-day-item {
+        align-items: stretch;
+        grid-template-columns: 1fr;
+      }
+
+      .assignment-item {
+        display: grid;
+      }
+
+      .selected-day-item {
+        flex-direction: column;
+      }
+
+      .complete-button,
+      .selected-day-complete {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 450px) {
+      h1 {
+        letter-spacing: -0.1rem;
+      }
+
+      .panel-header,
+      .calendar-controls {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .assignment-form {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .calendar-day {
+        min-height: 67px;
+      }
+
+      .calendar-event {
+        border-left: none;
+        text-align: center;
+      }
+
+      .calendar-event-text {
+        display: none;
+      }
+
+      .calendar-event::after {
+        content: "•";
+        font-size: 1rem;
+      }
+
+      .selected-day-header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="page-header">
+    <a class="back-link" href="BCHome.html">
+      <span>←</span>
+      <span>Back to Home</span>
+    </a>
+
+    <div class="header-content">
+      <div>
+        <span class="eyebrow">Cooper's School Dashboard</span>
+
+        <h1>School Planner</h1>
+
+        <p class="header-description">
+          Keep track of outstanding assignments and see every due date
+          automatically organized on your calendar.
+        </p>
+      </div>
+
+      <div class="assignment-count-card">
+        <span
+          class="assignment-count"
+          id="assignmentCount"
+        >
+          0
+        </span>
+
+        <span class="assignment-count-label">
+          Outstanding Assignments
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="dashboard-grid">
+      <!-- Assignment panel -->
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Add an Assignment</h2>
+
+          <p>
+            Enter an assignment and its due date. It will automatically
+            appear in the calendar.
+          </p>
+        </div>
+
+        <div class="assignment-form">
+          <div class="form-group">
+            <label for="assignmentName">
+              Assignment name
+            </label>
+
+            <input
+              id="assignmentName"
+              type="text"
+              placeholder="Example: Machine Learning Homework"
+              maxlength="100"
+            />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="courseName">
+                Course
+              </label>
+
+              <input
+                id="courseName"
+                type="text"
+                placeholder="Example: Machine Learning"
+                maxlength="60"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="dueDate">
+                Due date
+              </label>
+
+              <input
+                id="dueDate"
+                type="date"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="assignmentNotes">
+              Notes
+              <span aria-hidden="true">(optional)</span>
+            </label>
+
+            <textarea
+              id="assignmentNotes"
+              placeholder="Add instructions, reminders, or other details..."
+              maxlength="300"
+            ></textarea>
+          </div>
+
+          <button
+            class="add-button"
+            id="addAssignmentButton"
+            type="button"
+          >
+            + Add Assignment
+          </button>
+
+          <p
+            class="form-message"
+            id="formMessage"
+            aria-live="polite"
+          ></p>
+        </div>
+
+        <div class="assignment-list-section">
+          <div class="list-toolbar">
+            <h3>Outstanding Assignments</h3>
+          </div>
+
+          <div
+            class="assignment-list"
+            id="assignmentList"
+          ></div>
+        </div>
+      </section>
+
+      <!-- Calendar panel -->
+
+      <section class="panel calendar-panel">
+        <div class="calendar-controls">
+          <button
+            class="calendar-button"
+            id="previousMonthButton"
+            type="button"
+            aria-label="Previous month"
+          >
+            ←
+          </button>
+
+          <div class="calendar-title">
+            <h2 id="calendarMonthTitle"></h2>
+
+            <p>
+              Click a date to view its assignments
+            </p>
+          </div>
+
+          <button
+            class="calendar-button"
+            id="nextMonthButton"
+            type="button"
+            aria-label="Next month"
+          >
+            →
+          </button>
+        </div>
+
+        <button
+          class="today-button"
+          id="todayButton"
+          type="button"
+        >
+          Return to Today
+        </button>
+
+        <div class="calendar-container">
+          <div class="calendar-weekdays">
+            <div class="weekday">Sun</div>
+            <div class="weekday">Mon</div>
+            <div class="weekday">Tue</div>
+            <div class="weekday">Wed</div>
+            <div class="weekday">Thu</div>
+            <div class="weekday">Fri</div>
+            <div class="weekday">Sat</div>
+          </div>
+
+          <div
+            class="calendar-grid"
+            id="calendarGrid"
+          ></div>
+        </div>
+
+        <div class="selected-day-panel">
+          <div class="selected-day-header">
+            <div>
+              <span class="selected-day-label">
+                Selected Date
+              </span>
+
+              <h3 id="selectedDayTitle">
+                Choose a date
+              </h3>
+            </div>
+
+            <span
+              class="selected-day-count"
+              id="selectedDayCount"
+            >
+              0 items
+            </span>
+          </div>
+
+          <div
+            class="selected-day-list"
+            id="selectedDayList"
+            aria-live="polite"
+          >
+            <p class="selected-day-empty">
+              Click a day on the calendar to see its assignments.
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const STORAGE_KEY = "cooperSchoolAssignments";
+
+    const assignmentNameInput =
+      document.getElementById("assignmentName");
+
+    const courseNameInput =
+      document.getElementById("courseName");
+
+    const dueDateInput =
+      document.getElementById("dueDate");
+
+    const assignmentNotesInput =
+      document.getElementById("assignmentNotes");
+
+    const addAssignmentButton =
+      document.getElementById("addAssignmentButton");
+
+    const assignmentList =
+      document.getElementById("assignmentList");
+
+    const assignmentCount =
+      document.getElementById("assignmentCount");
+
+    const formMessage =
+      document.getElementById("formMessage");
+
+    const calendarGrid =
+      document.getElementById("calendarGrid");
+
+    const calendarMonthTitle =
+      document.getElementById("calendarMonthTitle");
+
+    const previousMonthButton =
+      document.getElementById("previousMonthButton");
+
+    const nextMonthButton =
+      document.getElementById("nextMonthButton");
+
+    const todayButton =
+      document.getElementById("todayButton");
+
+    const selectedDayTitle =
+      document.getElementById("selectedDayTitle");
+
+    const selectedDayCount =
+      document.getElementById("selectedDayCount");
+
+    const selectedDayList =
+      document.getElementById("selectedDayList");
+
+    let assignments = loadAssignments();
+
+    let displayedMonth = new Date(
+      new Date().getFullYear(),
+      new Date().getMonth(),
+      1
+    );
+
+    let selectedDateString = null;
+
+    /*
+      Turn a YYYY-MM-DD string into a local date.
+      This prevents timezone date shifting.
+    */
+
+    function createLocalDate(dateString) {
+      const [year, month, day] =
+        dateString.split("-").map(Number);
+
+      return new Date(year, month - 1, day);
+    }
+
+    function formatDateForStorage(date) {
+      const year = date.getFullYear();
+
+      const month =
+        String(date.getMonth() + 1).padStart(2, "0");
+
+      const day =
+        String(date.getDate()).padStart(2, "0");
+
+      return `${year}-${month}-${day}`;
+    }
+
+    function formatDueDate(dateString) {
+      const date = createLocalDate(dateString);
+
+      return date.toLocaleDateString(
+        "en-US",
+        {
+          month: "short",
+          day: "numeric",
+          year: "numeric"
+        }
+      );
+    }
+
+    /*
+      Load and save assignments.
+    */
+
+    function loadAssignments() {
+      try {
+        const savedAssignments =
+          localStorage.getItem(STORAGE_KEY);
+
+        return savedAssignments
+          ? JSON.parse(savedAssignments)
+          : [];
+      } catch (error) {
+        console.error(
+          "Assignments could not be loaded:",
+          error
+        );
+
+        return [];
+      }
+    }
+
+    function saveAssignments() {
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(assignments)
+      );
+    }
+
+    /*
+      Add a new assignment.
+    */
+
+    function addAssignment() {
+      const name =
+        assignmentNameInput.value.trim();
+
+      const course =
+        courseNameInput.value.trim();
+
+      const dueDate =
+        dueDateInput.value;
+
+      const notes =
+        assignmentNotesInput.value.trim();
+
+      if (!name || !dueDate) {
+        showMessage(
+          "Please enter an assignment name and due date.",
+          true
+        );
+
+        return;
+      }
+
+      const newAssignment = {
+        id:
+          Date.now().toString() +
+          Math.random().toString(16).slice(2),
+
+        name,
+        course,
+        dueDate,
+        notes
+      };
+
+      assignments.push(newAssignment);
+
+      saveAssignments();
+      clearForm();
+
+      const assignmentDate =
+        createLocalDate(dueDate);
+
+      displayedMonth = new Date(
+        assignmentDate.getFullYear(),
+        assignmentDate.getMonth(),
+        1
+      );
+
+      selectedDateString = dueDate;
+
+      renderEverything();
+      showAssignmentsForDate(dueDate);
+
+      showMessage("Assignment added!");
+    }
+
+    function clearForm() {
+      assignmentNameInput.value = "";
+      courseNameInput.value = "";
+      dueDateInput.value = "";
+      assignmentNotesInput.value = "";
+
+      assignmentNameInput.focus();
+    }
+
+    function showMessage(message, isError = false) {
+      formMessage.textContent = message;
+
+      formMessage.style.color =
+        isError
+          ? "var(--danger)"
+          : "var(--success)";
+
+      window.clearTimeout(showMessage.timeout);
+
+      showMessage.timeout =
+        window.setTimeout(() => {
+          formMessage.textContent = "";
+        }, 3000);
+    }
+
+    /*
+      Completing an assignment removes it from the
+      outstanding list and calendar.
+    */
+
+    function completeAssignment(id) {
+      assignments =
+        assignments.filter(
+          (assignment) =>
+            assignment.id !== id
+        );
+
+      saveAssignments();
+      renderEverything();
+
+      if (selectedDateString) {
+        showAssignmentsForDate(
+          selectedDateString
+        );
+      }
+
+      showMessage("Assignment completed!");
+    }
+
+    function assignmentIsOverdue(assignment) {
+      const today = new Date();
+
+      today.setHours(0, 0, 0, 0);
+
+      const dueDate =
+        createLocalDate(assignment.dueDate);
+
+      return dueDate < today;
+    }
+
+    /*
+      Draw the outstanding assignment list.
+    */
+
+    function renderAssignments() {
+      assignmentList.innerHTML = "";
+
+      const sortedAssignments =
+        [...assignments].sort(
+          (first, second) =>
+            createLocalDate(first.dueDate) -
+            createLocalDate(second.dueDate)
+        );
+
+      if (sortedAssignments.length === 0) {
+        assignmentList.innerHTML = `
+          <div class="empty-state">
+            <span class="empty-state-icon">📚</span>
+
+            <p>
+              No outstanding assignments.
+              Add a new assignment above.
+            </p>
+          </div>
+        `;
+
+        return;
+      }
+
+      sortedAssignments.forEach(
+        (assignment) => {
+          const assignmentElement =
+            document.createElement("article");
+
+          assignmentElement.className =
+            "assignment-item";
+
+          const details =
+            document.createElement("div");
+
+          details.className =
+            "assignment-details";
+
+          const title =
+            document.createElement("h4");
+
+          title.className =
+            "assignment-title";
+
+          title.textContent =
+            assignment.name;
+
+          const meta =
+            document.createElement("div");
+
+          meta.className =
+            "assignment-meta";
+
+          if (assignment.course) {
+            const courseBadge =
+              document.createElement("span");
+
+            courseBadge.className =
+              "meta-badge";
+
+            courseBadge.textContent =
+              assignment.course;
+
+            meta.appendChild(courseBadge);
+          }
+
+          const dueBadge =
+            document.createElement("span");
+
+          dueBadge.className =
+            "meta-badge due-badge";
+
+          if (assignmentIsOverdue(assignment)) {
+            dueBadge.classList.add(
+              "overdue"
+            );
+
+            dueBadge.textContent =
+              `Overdue · ${formatDueDate(
+                assignment.dueDate
+              )}`;
+          } else {
+            dueBadge.textContent =
+              `Due ${formatDueDate(
+                assignment.dueDate
+              )}`;
+          }
+
+          meta.appendChild(dueBadge);
+
+          details.appendChild(title);
+          details.appendChild(meta);
+
+          if (assignment.notes) {
+            const notes =
+              document.createElement("p");
+
+            notes.className =
+              "assignment-notes";
+
+            notes.textContent =
+              assignment.notes;
+
+            details.appendChild(notes);
+          }
+
+          const completeButton =
+            document.createElement("button");
+
+          completeButton.type = "button";
+          completeButton.className =
+            "complete-button";
+
+          completeButton.textContent =
+            "✓ Complete";
+
+          completeButton.setAttribute(
+            "aria-label",
+            `Complete ${assignment.name}`
+          );
+
+          completeButton.addEventListener(
+            "click",
+            () =>
+              completeAssignment(
+                assignment.id
+              )
+          );
+
+          assignmentElement.appendChild(
+            details
+          );
+
+          assignmentElement.appendChild(
+            completeButton
+          );
+
+          assignmentList.appendChild(
+            assignmentElement
+          );
+        }
+      );
+    }
+
+    function updateAssignmentCount() {
+      assignmentCount.textContent =
+        assignments.length;
+    }
+
+    /*
+      Display assignments for the clicked calendar date.
+    */
+
+    function showAssignmentsForDate(dateString) {
+      selectedDateString = dateString;
+
+      const selectedDate =
+        createLocalDate(dateString);
+
+      selectedDayTitle.textContent =
+        selectedDate.toLocaleDateString(
+          "en-US",
+          {
+            weekday: "long",
+            month: "long",
+            day: "numeric",
+            year: "numeric"
+          }
+        );
+
+      const dateAssignments =
+        assignments
+          .filter(
+            (assignment) =>
+              assignment.dueDate ===
+              dateString
+          )
+          .sort(
+            (first, second) =>
+              first.name.localeCompare(
+                second.name
+              )
+          );
+
+      selectedDayCount.textContent =
+        `${dateAssignments.length} ${
+          dateAssignments.length === 1
+            ? "item"
+            : "items"
+        }`;
+
+      selectedDayList.innerHTML = "";
+
+      if (dateAssignments.length === 0) {
+        selectedDayList.innerHTML = `
+          <p class="selected-day-empty">
+            Nothing is due on this date.
+          </p>
+        `;
+
+        return;
+      }
+
+      dateAssignments.forEach(
+        (assignment) => {
+          const item =
+            document.createElement("article");
+
+          item.className =
+            "selected-day-item";
+
+          const details =
+            document.createElement("div");
+
+          details.className =
+            "selected-day-item-details";
+
+          const title =
+            document.createElement("h4");
+
+          title.className =
+            "selected-day-item-title";
+
+          title.textContent =
+            assignment.name;
+
+          details.appendChild(title);
+
+          if (assignment.course) {
+            const course =
+              document.createElement("p");
+
+            course.className =
+              "selected-day-item-course";
+
+            course.textContent =
+              assignment.course;
+
+            details.appendChild(course);
+          }
+
+          if (assignment.notes) {
+            const notes =
+              document.createElement("p");
+
+            notes.className =
+              "selected-day-item-notes";
+
+            notes.textContent =
+              assignment.notes;
+
+            details.appendChild(notes);
+          }
+
+          const completeButton =
+            document.createElement("button");
+
+          completeButton.type = "button";
+          completeButton.className =
+            "selected-day-complete";
+
+          completeButton.textContent =
+            "✓ Complete";
+
+          completeButton.setAttribute(
+            "aria-label",
+            `Complete ${assignment.name}`
+          );
+
+          completeButton.addEventListener(
+            "click",
+            () => {
+              completeAssignment(
+                assignment.id
+              );
+            }
+          );
+
+          item.appendChild(details);
+          item.appendChild(
+            completeButton
+          );
+
+          selectedDayList.appendChild(item);
+        }
+      );
+    }
+
+    /*
+      Draw the monthly calendar.
+    */
+
+    function renderCalendar() {
+      calendarGrid.innerHTML = "";
+
+      const year =
+        displayedMonth.getFullYear();
+
+      const month =
+        displayedMonth.getMonth();
+
+      calendarMonthTitle.textContent =
+        displayedMonth.toLocaleDateString(
+          "en-US",
+          {
+            month: "long",
+            year: "numeric"
+          }
+        );
+
+      const firstDayOfMonth =
+        new Date(year, month, 1);
+
+      const calendarStart =
+        new Date(
+          year,
+          month,
+          1 - firstDayOfMonth.getDay()
+        );
+
+      const today = new Date();
+
+      const todayString =
+        formatDateForStorage(today);
+
+      for (
+        let dayIndex = 0;
+        dayIndex < 42;
+        dayIndex++
+      ) {
+        const date =
+          new Date(calendarStart);
+
+        date.setDate(
+          calendarStart.getDate() +
+          dayIndex
+        );
+
+        const dateString =
+          formatDateForStorage(date);
+
+        const dayElement =
+          document.createElement("div");
+
+        dayElement.className =
+          "calendar-day";
+
+        dayElement.setAttribute(
+          "role",
+          "button"
+        );
+
+        dayElement.setAttribute(
+          "tabindex",
+          "0"
+        );
+
+        dayElement.setAttribute(
+          "aria-label",
+          `View assignments for ${
+            date.toLocaleDateString(
+              "en-US",
+              {
+                month: "long",
+                day: "numeric",
+                year: "numeric"
+              }
+            )
+          }`
+        );
+
+        if (date.getMonth() !== month) {
+          dayElement.classList.add(
+            "outside-month"
+          );
+        }
+
+        if (dateString === todayString) {
+          dayElement.classList.add(
+            "today"
+          );
+        }
+
+        if (
+          dateString ===
+          selectedDateString
+        ) {
+          dayElement.classList.add(
+            "selected"
+          );
+        }
+
+        const dayNumber =
+          document.createElement("div");
+
+        dayNumber.className =
+          "day-number";
+
+        dayNumber.textContent =
+          date.getDate();
+
+        const eventContainer =
+          document.createElement("div");
+
+        eventContainer.className =
+          "calendar-events";
+
+        const dateAssignments =
+          assignments
+            .filter(
+              (assignment) =>
+                assignment.dueDate ===
+                dateString
+            )
+            .sort(
+              (first, second) =>
+                first.name.localeCompare(
+                  second.name
+                )
+            );
+
+        const visibleAssignments =
+          dateAssignments.slice(0, 3);
+
+        visibleAssignments.forEach(
+          (assignment) => {
+            const event =
+              document.createElement("div");
+
+            event.className =
+              "calendar-event";
+
+            event.title =
+              assignment.course
+                ? `${assignment.name} — ${assignment.course}`
+                : assignment.name;
+
+            const eventText =
+              document.createElement("span");
+
+            eventText.className =
+              "calendar-event-text";
+
+            eventText.textContent =
+              assignment.name;
+
+            event.appendChild(eventText);
+
+            eventContainer.appendChild(
+              event
+            );
+          }
+        );
+
+        if (dateAssignments.length > 3) {
+          const remainingEvents =
+            document.createElement("div");
+
+          remainingEvents.className =
+            "more-events";
+
+          remainingEvents.textContent =
+            `+${dateAssignments.length - 3} more`;
+
+          eventContainer.appendChild(
+            remainingEvents
+          );
+        }
+
+        dayElement.appendChild(dayNumber);
+        dayElement.appendChild(
+          eventContainer
+        );
+
+        dayElement.addEventListener(
+          "click",
+          () => {
+            showAssignmentsForDate(
+              dateString
+            );
+
+            renderCalendar();
+          }
+        );
+
+        dayElement.addEventListener(
+          "keydown",
+          (event) => {
+            if (
+              event.key === "Enter" ||
+              event.key === " "
+            ) {
+              event.preventDefault();
+
+              showAssignmentsForDate(
+                dateString
+              );
+
+              renderCalendar();
+            }
+          }
+        );
+
+        calendarGrid.appendChild(
+          dayElement
+        );
+      }
+    }
+
+    function renderEverything() {
+      renderAssignments();
+      updateAssignmentCount();
+      renderCalendar();
+    }
+
+    /*
+      Calendar navigation.
+    */
+
+    previousMonthButton.addEventListener(
+      "click",
+      () => {
+        displayedMonth = new Date(
+          displayedMonth.getFullYear(),
+          displayedMonth.getMonth() - 1,
+          1
+        );
+
+        renderCalendar();
+      }
+    );
+
+    nextMonthButton.addEventListener(
+      "click",
+      () => {
+        displayedMonth = new Date(
+          displayedMonth.getFullYear(),
+          displayedMonth.getMonth() + 1,
+          1
+        );
+
+        renderCalendar();
+      }
+    );
+
+    todayButton.addEventListener(
+      "click",
+      () => {
+        const today = new Date();
+
+        displayedMonth = new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          1
+        );
+
+        selectedDateString =
+          formatDateForStorage(today);
+
+        renderCalendar();
+
+        showAssignmentsForDate(
+          selectedDateString
+        );
+      }
+    );
+
+    /*
+      Assignment input controls.
+    */
+
+    addAssignmentButton.addEventListener(
+      "click",
+      addAssignment
+    );
+
+    [
+      assignmentNameInput,
+      courseNameInput,
+      dueDateInput
+    ].forEach((input) => {
+      input.addEventListener(
+        "keydown",
+        (event) => {
+          if (event.key === "Enter") {
+            addAssignment();
+          }
+        }
+      );
+    });
+
+    /*
+      Initial page rendering.
+    */
+
+    renderEverything();
+  </script>
+</body>
+</html>
