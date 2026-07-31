@@ -11,8 +11,9 @@ import {
 */
 
 const ALLOWED_USER_IDS = [
-  "PASTE_COOPERS_UID_HERE",
-  "PASTE_BRADLEYS_UID_HERE"
+  "38hHSdhnpbb4R8esqyjiKVaUmXy1",
+  "eQXWaqfny0OXrBKUrxpaUEjmSFf1",
+  "W303Mkmyv3R9ih1mNvDGBg5ygAg2"
 ];
 
 onAuthStateChanged(auth, async (user) => {
