@@ -1,3 +1,4 @@
+html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,11 +21,15 @@
     :root {
       --background-dark: #10131c;
       --background-light: #1c2130;
+
       --text-primary: #ffffff;
       --text-secondary: #bec4d4;
+
       --accent: #8ab4ff;
       --accent-light: #d2e1ff;
+
       --danger: #ff9aa8;
+      --danger-light: #ffd1d7;
     }
 
     body {
@@ -104,11 +109,72 @@
       border-radius: 27px;
 
       background: rgba(255, 255, 255, 0.08);
-      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.3);
+
+      box-shadow:
+        0 28px 70px rgba(0, 0, 0, 0.3);
 
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
     }
+
+    /* =========================
+       Unauthorized notice
+    ========================== */
+
+    .unauthorized-message {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+
+      margin-bottom: 18px;
+      padding: 15px;
+
+      border:
+        1px solid rgba(255, 154, 168, 0.35);
+
+      border-radius: 15px;
+
+      color: var(--danger-light);
+      background: rgba(255, 154, 168, 0.1);
+
+      text-align: left;
+    }
+
+    .unauthorized-message[hidden] {
+      display: none;
+    }
+
+    .unauthorized-icon {
+      display: grid;
+      flex-shrink: 0;
+      place-items: center;
+
+      width: 28px;
+      height: 28px;
+
+      border-radius: 50%;
+
+      color: #171923;
+      background: var(--danger);
+
+      font-weight: 800;
+    }
+
+    .unauthorized-message h2 {
+      margin-bottom: 4px;
+      font-size: 0.95rem;
+    }
+
+    .unauthorized-message p {
+      color: #ffc7cf;
+
+      font-size: 0.8rem;
+      line-height: 1.5;
+    }
+
+    /* =========================
+       Google button
+    ========================== */
 
     .google-button {
       display: flex;
@@ -123,6 +189,7 @@
       border-radius: 15px;
 
       color: #111520;
+
       background:
         linear-gradient(
           135deg,
@@ -148,6 +215,13 @@
         0 12px 30px rgba(138, 180, 255, 0.25);
     }
 
+    .google-button:focus-visible {
+      outline:
+        3px solid rgba(138, 180, 255, 0.45);
+
+      outline-offset: 3px;
+    }
+
     .google-button:disabled {
       cursor: wait;
       opacity: 0.65;
@@ -162,7 +236,6 @@
 
       border-radius: 50%;
 
-      color: #ffffff;
       background: #ffffff;
 
       font-size: 0.9rem;
@@ -205,16 +278,45 @@
     </p>
 
     <section class="login-card">
+      <div
+        class="unauthorized-message"
+        id="unauthorizedMessage"
+        role="alert"
+        hidden
+      >
+        <span
+          class="unauthorized-icon"
+          aria-hidden="true"
+        >
+          !
+        </span>
+
+        <div>
+          <h2>Access denied</h2>
+
+          <p>
+            This Google account is not authorized to access
+            the website. Please choose Cooper's or Bradley's
+            approved Google account.
+          </p>
+        </div>
+      </div>
+
       <button
         class="google-button"
         id="googleLoginButton"
         type="button"
       >
-        <span class="google-icon">
+        <span
+          class="google-icon"
+          aria-hidden="true"
+        >
           <span>G</span>
         </span>
 
-        <span>Continue with Google</span>
+        <span id="googleButtonText">
+          Continue with Google
+        </span>
       </button>
 
       <p
@@ -240,35 +342,90 @@
       "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
 
     const googleLoginButton =
-      document.getElementById("googleLoginButton");
+      document.getElementById(
+        "googleLoginButton"
+      );
+
+    const googleButtonText =
+      document.getElementById(
+        "googleButtonText"
+      );
 
     const loginMessage =
-      document.getElementById("loginMessage");
+      document.getElementById(
+        "loginMessage"
+      );
+
+    const unauthorizedMessage =
+      document.getElementById(
+        "unauthorizedMessage"
+      );
+
+    /*
+      Check whether auth-guard.js redirected the visitor
+      here because their UID was not approved.
+    */
+
+    const pageParameters =
+      new URLSearchParams(
+        window.location.search
+      );
+
+    const unauthorizedAccount =
+      pageParameters.get("error") ===
+      "unauthorized";
+
+    if (unauthorizedAccount) {
+      unauthorizedMessage.hidden = false;
+
+      loginMessage.textContent =
+        "Choose one of the two approved Google accounts.";
+
+      /*
+        Remove the query parameter after displaying
+        the warning so refreshing does not keep showing it.
+      */
+
+      window.history.replaceState(
+        {},
+        document.title,
+        window.location.pathname
+      );
+    }
 
     const provider =
       new GoogleAuthProvider();
 
     /*
-      Show Google's account picker even when the browser
-      already has a Google account selected.
+      Always display Google's account selector.
     */
 
     provider.setCustomParameters({
       prompt: "select_account"
     });
 
+    /*
+      If an approved user is already signed in and this
+      was not an unauthorized redirect, return home.
+    */
+
     onAuthStateChanged(auth, (user) => {
-      if (user) {
-        window.location.replace("index.html");
+      if (user && !unauthorizedAccount) {
+        window.location.replace(
+          "index.html"
+        );
       }
     });
 
     async function signInWithGoogle() {
       googleLoginButton.disabled = true;
-      googleLoginButton.lastElementChild.textContent =
+
+      googleButtonText.textContent =
         "Signing In...";
 
       loginMessage.textContent = "";
+
+      unauthorizedMessage.hidden = true;
 
       try {
         await signInWithPopup(
@@ -276,7 +433,15 @@
           provider
         );
 
-        window.location.replace("index.html");
+        /*
+          The protected home page will check the user's UID.
+          Approved users remain on the site. Other users are
+          sent back here with ?error=unauthorized.
+        */
+
+        window.location.replace(
+          "index.html"
+        );
       } catch (error) {
         console.error(
           "Google sign-in failed:",
@@ -291,17 +456,30 @@
             "The Google sign-in window was closed.";
         } else if (
           error.code ===
+          "auth/cancelled-popup-request"
+        ) {
+          loginMessage.textContent =
+            "The sign-in request was cancelled.";
+        } else if (
+          error.code ===
+          "auth/popup-blocked"
+        ) {
+          loginMessage.textContent =
+            "Your browser blocked the Google sign-in window. Allow popups and try again.";
+        } else if (
+          error.code ===
           "auth/unauthorized-domain"
         ) {
           loginMessage.textContent =
             "This GitHub Pages domain has not been authorized in Firebase.";
         } else {
           loginMessage.textContent =
-            "Google sign-in could not be completed.";
+            "Google sign-in could not be completed. Please try again.";
         }
 
         googleLoginButton.disabled = false;
-        googleLoginButton.lastElementChild.textContent =
+
+        googleButtonText.textContent =
           "Continue with Google";
       }
     }
