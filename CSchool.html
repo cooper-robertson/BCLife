@@ -1150,38 +1150,50 @@
 </head>
 
 <body>
-  <header class="page-header">
+<header class="page-header">
+  <div class="header-navigation">
     <a class="back-link" href="index.html">
       <span>←</span>
       <span>Back to Home</span>
     </a>
 
-    <div class="header-content">
-      <div>
-        <span class="eyebrow">Cooper's School Dashboard</span>
+    <button
+      class="logout-button"
+      id="logoutButton"
+      type="button"
+    >
+      Sign Out
+    </button>
+  </div>
 
-        <h1>School Planner</h1>
+  <div class="header-content">
+    <div>
+      <span class="eyebrow">
+        Cooper's Dashboard
+      </span>
 
-        <p class="header-description">
-          Keep track of outstanding assignments and see every due date
-          automatically organized on your calendar.
-        </p>
-      </div>
+      <h1>School Planner</h1>
 
-      <div class="assignment-count-card">
-        <span
-          class="assignment-count"
-          id="assignmentCount"
-        >
-          0
-        </span>
-
-        <span class="assignment-count-label">
-          Outstanding Assignments
-        </span>
-      </div>
+      <p class="header-description">
+        Keep track of outstanding assignments and see every due date
+        automatically organized on your calendar.
+      </p>
     </div>
-  </header>
+
+    <div class="assignment-count-card">
+      <span
+        class="assignment-count"
+        id="assignmentCount"
+      >
+        0
+      </span>
+
+      <span class="assignment-count-label">
+        Outstanding Assignments
+      </span>
+    </div>
+  </div>
+</header>
 
   <main>
     <div class="dashboard-grid">
@@ -1230,13 +1242,13 @@
                 Due date
               </label>
 
+            <div class="date-input-wrapper">
               <input
                 id="dueDate"
                 type="date"
               />
             </div>
           </div>
-
           <div class="form-group">
             <label for="assignmentNotes">
               Notes
