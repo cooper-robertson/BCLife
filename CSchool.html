@@ -324,6 +324,18 @@
     min-width: 0;
   }
 
+  .notes-group {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .notes-group textarea {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    min-height: 100px;
+  }
+
   label {
     color: var(--text-secondary);
     font-size: 0.84rem;
@@ -1209,73 +1221,75 @@
           </p>
         </div>
 
-        <div class="assignment-form">
-          <div class="form-group">
-            <label for="assignmentName">
-              Assignment name
-            </label>
+<div class="assignment-form">
+  <div class="form-group">
+    <label for="assignmentName">
+      Assignment name
+    </label>
 
-            <input
-              id="assignmentName"
-              type="text"
-              placeholder="Example: Machine Learning Homework"
-              maxlength="100"
-            />
-          </div>
+    <input
+      id="assignmentName"
+      type="text"
+      placeholder="Example: Machine Learning Homework"
+      maxlength="100"
+    />
+  </div>
 
-          <div class="form-row">
-            <div class="form-group">
-              <label for="courseName">
-                Course
-              </label>
+  <div class="form-row">
+    <div class="form-group">
+      <label for="courseName">
+        Course
+      </label>
 
-              <input
-                id="courseName"
-                type="text"
-                placeholder="Example: Machine Learning"
-                maxlength="60"
-              />
-            </div>
+      <input
+        id="courseName"
+        type="text"
+        placeholder="Example: Machine Learning"
+        maxlength="60"
+      />
+    </div>
 
-            <div class="form-group">
-              <label for="dueDate">
-                Due date
-              </label>
+    <div class="form-group">
+      <label for="dueDate">
+        Due date
+      </label>
 
-            <div class="date-input-wrapper">
-              <input
-                id="dueDate"
-                type="date"
-              />
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="assignmentNotes">
-              Notes
-              <span aria-hidden="true">(optional)</span>
-            </label>
+      <div class="date-input-wrapper">
+        <input
+          id="dueDate"
+          type="date"
+        />
+      </div>
+    </div>
+  </div>
 
-            <textarea
-              id="assignmentNotes"
-              placeholder="Add instructions, reminders, or other details..."
-              maxlength="300"
-            ></textarea>
-          </div>
+  <div class="form-group notes-group">
+    <label for="assignmentNotes">
+      Notes
+      <span aria-hidden="true">(optional)</span>
+    </label>
 
-          <button
-            class="add-button"
-            id="addAssignmentButton"
-            type="button"
-          >
-            + Add Assignment
-          </button>
+    <textarea
+      id="assignmentNotes"
+      placeholder="Add instructions, reminders, or other details..."
+      maxlength="300"
+    ></textarea>
+  </div>
 
-          <p
-            class="form-message"
-            id="formMessage"
-            aria-live="polite"
-          ></p>
-        </div>
+  <button
+    class="add-button"
+    id="addAssignmentButton"
+    type="button"
+  >
+    + Add Assignment
+  </button>
+
+  <p
+    class="form-message"
+    id="formMessage"
+    aria-live="polite"
+  ></p>
+</div>
 
         <div class="assignment-list-section">
           <div class="list-toolbar">
